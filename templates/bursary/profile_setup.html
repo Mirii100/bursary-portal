@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile Setup - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="fw-bold mb-0">Student Profile Setup</h3>
+                        <div class="step-indicator">
+                            <span class="badge bg-primary rounded-pill px-3 py-2" id="stepCounter">Step 1 of 4</span>
+                        </div>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="progress mt-3" style="height: 6px; background-color: rgba(255,255,255,0.1);">
+                        <div id="setupProgress" class="progress-bar bg-primary" role="progressbar" style="width: 25%"></div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4 p-lg-5">
+                    <form id="profileSetupForm" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Step 1: Institutional Details -->
+                        <div class="setup-step" id="step1">
+                            <div class="mb-4">
+                                <h5 class="fw-bold text-primary"><i class="bi bi-mortarboard-fill me-2"></i> Institutional Details</h5>
+                                <p class="text-muted small">Information about your current school or college.</p>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold small text-muted">Academic Institution</label>
+                                    {{ form.school_name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Admission / Registration No.</label>
+                                    {{ form.admission_number }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Residency Details (Dropdowns) -->
+                        <div class="setup-step d-none" id="step2">
+                            <div class="mb-4">
+                                <h5 class="fw-bold text-primary"><i class="bi bi-geo-alt-fill me-2"></i> Residency Details</h5>
+                                <p class="text-muted small">Select your official residence details.</p>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">County</label>
+                                    {{ form.county }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Constituency</label>
+                                    {{ form.constituency }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Ward</label>
+                                    {{ form.ward }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Location</label>
+                                    {{ form.location }}
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold small text-muted">Sub-Location</label>
+                                    {{ form.sub_location }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Parent / Guardian Information -->
+                        <div class="setup-step d-none" id="step3">
+                            <div class="mb-4">
+                                <h5 class="fw-bold text-primary"><i class="bi bi-people-fill me-2"></i> Parent / Guardian Information</h5>
+                                <p class="text-muted small">Details of the person supporting your education.</p>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold small text-muted">Full Name</label>
+                                    {{ form.guardian_name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Phone Number</label>
+                                    {{ form.guardian_phone }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">National ID Number</label>
+                                    {{ form.guardian_id_number }}
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold small text-muted d-flex justify-content-between">
+                                        Upload Guardian ID Copy <span class="text-danger">* Mandatory</span>
+                                    </label>
+                                    {{ form.guardian_id_copy }}
+                                    <div class="form-text small">Upload a clear photo or scan of the guardian's National ID card.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Socio-Economic Details -->
+                        <div class="setup-step d-none" id="step4">
+                            <div class="mb-4">
+                                <h5 class="fw-bold text-primary"><i class="bi bi-cash-stack me-2"></i> Socio-Economic Details</h5>
+                                <p class="text-muted small">This information helps us assess your financial need.</p>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Monthly Household Income (KES)</label>
+                                    {{ form.guardian_income }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Total Household Size</label>
+                                    {{ form.household_size }}
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-warning border-0 mt-4 small shadow-sm">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                <strong>Final Confirmation:</strong> By clicking 'Complete Setup', you certify that all information provided is true and accurate to the best of your knowledge.
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="d-flex flex-column flex-md-row justify-content-between mt-5 border-top pt-4 gap-2">
+                            <button type="button" class="btn btn-light px-4 d-none order-2 order-md-1" id="prevBtn" onclick="changeStep(-1)">
+                                <i class="bi bi-arrow-left me-2"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-primary px-5 ms-md-auto order-1 order-md-2" id="nextBtn" onclick="changeStep(1)">
+                                Next Step <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                            <button type="submit" class="btn btn-success px-5 d-none ms-md-auto fw-bold order-1 order-md-2" id="submitBtn">
+                                Complete Setup <i class="bi bi-check-lg ms-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function changeStep(n) {
+        const steps = document.getElementsByClassName("setup-step");
+        steps[currentStep - 1].classList.add("d-none");
+        currentStep += n;
+        steps[currentStep - 1].classList.remove("d-none");
+        
+        document.getElementById("stepCounter").innerText = `Step ${currentStep} of ${totalSteps}`;
+        document.getElementById("setupProgress").style.width = `${(currentStep / totalSteps) * 100}%`;
+        
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const submitBtn = document.getElementById("submitBtn");
+        
+        if (currentStep === 1) prevBtn.classList.add("d-none");
+        else prevBtn.classList.remove("d-none");
+        
+        if (currentStep === totalSteps) {
+            nextBtn.classList.add("d-none");
+            submitBtn.classList.remove("d-none");
+        } else {
+            nextBtn.classList.remove("d-none");
+            submitBtn.classList.add("d-none");
+        }
+    }
+</script>
+{% endblock %}

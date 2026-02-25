@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Details - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <div>
+            <h2 class="fw-bold mb-0">Application Review: {{ application.student.get_full_name }}</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a href="{% url 'committee-dashboard' %}">Vetting</a></li>
+                    <li class="breadcrumb-item active">Application #{{ application.id }}</li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <a href="{% url 'review-application' application.pk %}" class="btn btn-primary px-4 shadow-sm">
+                <i class="bi bi-pencil-square me-2"></i> Score & Recommend
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Student Info Column -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 mb-4 h-100">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-person-badge me-2"></i> Personal Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Full Name</label><p class="small">{{ application.student.get_full_name }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">National ID</label><p class="small">{{ application.student.national_id }}</p></div>
+                        <div class="col-12 col-sm-4"><label class="text-muted small fw-bold">Institution</label><p class="small">{{ application.student.student_profile.school_name }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Adm No</label><p class="small">{{ application.student.student_profile.admission_number }}</p></div>
+                        
+                        <div class="col-12 border-top pt-2 mt-2">
+                            <h6 class="fw-bold text-primary mb-2">Residency & Location</h6>
+                        </div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">County</label><p class="small">{{ application.student.student_profile.county|default:"-" }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Constituency</label><p class="small">{{ application.student.student_profile.constituency|default:"-" }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Ward</label><p class="small">{{ application.student.student_profile.ward|default:"-" }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Location</label><p class="small">{{ application.student.student_profile.location|default:"-" }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Sub-Location</label><p class="small">{{ application.student.student_profile.sub_location|default:"-" }}</p></div>
+
+                        <div class="col-12 border-top pt-2 mt-2">
+                            <h6 class="fw-bold text-primary mb-2">Guardian Details</h6>
+                        </div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Guardian Name</label><p class="small">{{ application.student.student_profile.guardian_name }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Guardian Phone</label><p class="small">{{ application.student.student_profile.guardian_phone }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Income</label><p class="small fw-bold text-dark">KES {{ application.student.student_profile.guardian_income }}</p></div>
+                        <div class="col-6 col-sm-4"><label class="text-muted small fw-bold">Score</label><p><span class="badge bg-light text-primary border border-primary">{{ application.score }}/100</span></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documents Column -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-file-earmark-pdf me-2"></i> Uploaded Documents</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush border rounded overflow-hidden">
+                        {% if application.document_bundle.student_id_card %}
+                            <a href="{{ application.document_bundle.student_id_card.url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" target="_blank">
+                                <div><i class="bi bi-card-image me-2 text-primary"></i> National / Student ID</div>
+                                <span class="badge bg-light text-muted">View File</span>
+                            </a>
+                        {% endif %}
+                        {% if application.document_bundle.fee_structure %}
+                            <a href="{{ application.document_bundle.fee_structure.url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" target="_blank">
+                                <div><i class="bi bi-file-earmark-medical me-2 text-primary"></i> Current Fee Structure</div>
+                                <span class="badge bg-light text-muted">View File</span>
+                            </a>
+                        {% endif %}
+                        {% if application.document_bundle.admission_letter %}
+                            <a href="{{ application.document_bundle.admission_letter.url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" target="_blank">
+                                <div><i class="bi bi-journal-check me-2 text-primary"></i> Admission Letter</div>
+                                <span class="badge bg-light text-muted">View File</span>
+                            </a>
+                        {% endif %}
+                        {% if application.student.student_profile.guardian_id_copy %}
+                            <a href="{{ application.student.student_profile.guardian_id_copy.url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" target="_blank">
+                                <div><i class="bi bi-person-vcard me-2 text-primary"></i> Guardian ID Copy</div>
+                                <span class="badge bg-light text-muted">View File</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                    {% if not application.document_bundle %}
+                        <div class="alert alert-danger py-2 small mt-3">Warning: Critical documents missing.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

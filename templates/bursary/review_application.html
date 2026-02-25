@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Review Application - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Application Details - {{ object.student.get_full_name }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <p><strong>National ID:</strong> {{ object.student.national_id }}</p>
+                            <p><strong>School:</strong> {{ object.student.student_profile.school_name }}</p>
+                            <p><strong>Adm No:</strong> {{ object.student.student_profile.admission_number }}</p>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Household Size:</strong> {{ object.student.student_profile.household_size }}</p>
+                            <p><strong>Guardian Income:</strong> KES {{ object.student.student_profile.guardian_income }}</p>
+                            <p><strong>Amount Requested:</strong> KES {{ object.amount_requested }}</p>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    <h6 class="fw-bold">Attached Documents</h6>
+                    <div class="list-group">
+                        <a href="{{ object.document_bundle.student_id_card.url }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            Student ID Card
+                            <span class="badge bg-primary rounded-pill">View</span>
+                        </a>
+                        <a href="{{ object.document_bundle.fee_structure.url }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            Fee Structure
+                            <span class="badge bg-primary rounded-pill">View</span>
+                        </a>
+                        {% if object.document_bundle.admission_letter %}
+                        <a href="{{ object.document_bundle.admission_letter.url }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            Admission Letter
+                            <span class="badge bg-primary rounded-pill">View</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Scoring & Recommendation</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Vulnerability Score (0-100)</label>
+                            {{ form.score }}
+                            <div class="form-text">Base on income level, household size, and academic need.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Committee Comments</label>
+                            {{ form.committee_comments }}
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Submit Recommendation</button>
+                            <a href="{% url 'committee-dashboard' %}" class="btn btn-outline-secondary">Back to Dashboard</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

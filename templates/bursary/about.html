@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5 py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold text-primary mb-4">Empowering the Future through Innovation</h1>
+            <p class="lead text-muted">Alexia's Global Tech Constituency Bursary System is a state-of-the-art digital platform dedicated to the fair, transparent, and efficient distribution of educational funds.</p>
+            <p class="text-dark">Our mission is to eliminate the bottlenecks of manual bursary applications, ensuring that every deserving student in the constituency has an equal opportunity to access financial support for their education.</p>
+        </div>
+        <div class="col-lg-6">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1000" alt="Students studying" class="img-fluid rounded-4 shadow-lg">
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <h4 class="fw-bold text-primary">Our Vision</h4>
+                <p class="text-muted mb-0">To be the most trusted and efficient constituency educational support system in the region, leveraging technology for community impact.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <h4 class="fw-bold text-primary">Our Values</h4>
+                <p class="text-muted mb-0">Integrity, Transparency, Accountability, and Student-Centric Innovation are at the heart of everything we build.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <h4 class="fw-bold text-primary">Our Impact</h4>
+                <p class="text-muted mb-0">By automating vetting and disbursement, we've reduced application processing time by 70% and increased fund reach by 40%.</p>
+            </div>
+        </div>
+    <!-- Serving Board -->
+    <div class="mb-5">
+        <h2 class="fw-bold text-center mb-5">Our Serving Board of Directors</h2>
+        <div class="row g-4 justify-content-center">
+            {% for member in serving_board %}
+                <div class="col-md-3 text-center">
+                    <div class="card border-0 shadow-sm h-100 p-3">
+                        {% if member.photo %}
+                            <img src="{{ member.photo.url }}" class="rounded-circle mx-auto mb-3 shadow-sm" style="width: 120px; height: 120px; object-fit: cover; border: 3px solid var(--helb-blue);">
+                        {% else %}
+                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm" style="width: 120px; height: 120px; border: 3px solid #eee;">
+                                <i class="bi bi-person text-muted fs-1"></i>
+                            </div>
+                        {% endif %}
+                        <h5 class="fw-bold mb-1">{{ member.name }}</h5>
+                        <p class="text-primary small fw-bold mb-1">{{ member.role }}</p>
+                        <small class="text-muted">{{ member.period }}</small>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted">Records for serving board members will be updated soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Previous Board -->
+    <div class="py-5 bg-white rounded-4 shadow-sm px-4 mb-5 border">
+        <h3 class="fw-bold text-dark mb-4">Previous Board Members</h3>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr class="small text-uppercase text-muted">
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Service Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in previous_board %}
+                        <tr>
+                            <td class="fw-bold text-dark">{{ member.name }}</td>
+                            <td class="text-primary">{{ member.role }}</td>
+                            <td class="text-muted">{{ member.period }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="3" class="text-center text-muted py-4">No previous board records found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

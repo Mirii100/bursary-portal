@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Financial History - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <div>
+            <h2 class="fw-bold mb-0 text-dark">Financial Disbursement Records</h2>
+            <p class="text-muted small">Historical overview of bursary allocations by academic year.</p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-light text-primary border border-primary px-3 py-2">Staff Only Access</span>
+        </div>
+    </div>
+
+    <!-- Annual Summary -->
+    <div class="row g-4 mb-5">
+        {% for record in financial_history %}
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 border-start border-4 border-success">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="fw-bold mb-0">{{ record.academic_year }}</h5>
+                            <i class="bi bi-calendar-check text-success fs-4"></i>
+                        </div>
+                        <div class="mb-2">
+                            <small class="text-muted text-uppercase fw-bold smaller">Total Students</small>
+                            <h4 class="fw-bold mb-0 text-dark">{{ record.total_students }}</h4>
+                        </div>
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold smaller">Total Funds</small>
+                            <h4 class="fw-bold mb-0 text-success">KES {{ record.total_disbursed|floatformat:0 }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fst-italic">No historical financial records found.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Detailed Transaction Log -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3 border-bottom">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-receipt me-2"></i> All Disbursements</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr class="small text-uppercase text-muted">
+                            <th class="ps-4">Date</th>
+                            <th>Student Name</th>
+                            <th>Reference</th>
+                            <th>Status</th>
+                            <th class="text-end pe-4">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in all_payments %}
+                            <tr>
+                                <td class="ps-4 text-muted small">{{ payment.date_paid|date:"M d, Y" }}</td>
+                                <td class="fw-bold">{{ payment.application.student.get_full_name }}</td>
+                                <td class="text-monospace small">{{ payment.payment_reference }}</td>
+                                <td><span class="badge bg-success-subtle text-success px-3">Completed</span></td>
+                                <td class="text-end pe-4 fw-bold">KES {{ payment.amount_awarded|floatformat:0 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

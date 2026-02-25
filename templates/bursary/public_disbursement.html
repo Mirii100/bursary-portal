@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Public Disbursement Records - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark">Transparency Portal: Financial Oversight</h2>
+        <p class="text-muted">Open access to Alexia's Global Tech constituency fund utilization and planning.</p>
+    </div>
+
+    <!-- Summary Overview -->
+    <div class="row g-4 mb-5 justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 bg-primary text-white text-center">
+                <div class="card-body p-5">
+                    <small class="text-uppercase opacity-75 fw-bold">Total Community Disbursement</small>
+                    <h1 class="display-4 fw-bold mb-0">KES {{ total_constituency_disbursed|floatformat:0 }}</h1>
+                    <p class="small mb-0 mt-2 opacity-75">Cumulative support across all academic years</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 bg-success text-white text-center">
+                <div class="card-body p-5">
+                    <small class="text-uppercase opacity-75 fw-bold">Students Empowered</small>
+                    <h1 class="display-4 fw-bold mb-0">{{ total_students_helped }}</h1>
+                    <p class="small mb-0 mt-2 opacity-75">Deserving beneficiaries reached by Alexia's Global Tech</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Planned Disbursements -->
+    <div class="mb-5">
+        <h3 class="fw-bold mb-4 text-dark"><i class="bi bi-graph-up-arrow me-2 text-primary"></i> Current & Planned Cycles</h3>
+        <div class="row g-4">
+            {% for cycle in active_cycles %}
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 h-100 border-start border-4 border-primary">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold mb-0">Academic Year {{ cycle.year }}</h5>
+                                <span class="badge bg-primary rounded-pill">Active Planning</span>
+                            </div>
+                            <div class="d-flex align-items-baseline">
+                                <span class="text-muted small me-2">Allocated Budget:</span>
+                                <h4 class="fw-bold text-dark mb-0">KES {{ cycle.planned_budget|floatformat:0 }}</h4>
+                            </div>
+                            <p class="text-muted small mt-3 mb-0">This budget is reserved for students applying within the {{ cycle.year }} cycle. Allocations will be prioritized based on system vulnerability scores.</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-4 bg-light rounded">
+                    <p class="text-muted mb-0">New cycle budgets will be announced shortly.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Historical Table -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i> Historical Disbursement Log</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr class="small text-uppercase text-muted">
+                            <th class="ps-4">Academic Year</th>
+                            <th>Total Beneficiaries</th>
+                            <th class="text-end pe-4">Total Amount Disbursed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in financial_history %}
+                            <tr>
+                                <td class="ps-4 fw-bold">{{ record.academic_year }}</td>
+                                <td>{{ record.total_students }} Students</td>
+                                <td class="text-end pe-4 fw-bold text-success">KES {{ record.total_disbursed|floatformat:0 }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="3" class="text-center py-4 text-muted">No historical data available yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

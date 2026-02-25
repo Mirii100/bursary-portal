@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Proposed Developments - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="fw-bold mb-0">Constituency Development Projects</h2>
+            <p class="text-muted">Transparency in our mission to improve local infrastructure and services.</p>
+        </div>
+        {% if user.role == 'admin' or user.is_superuser %}
+            <a href="{% url 'development-create' %}" class="btn btn-primary shadow-sm">
+                <i class="bi bi-plus-lg me-2"></i> Post New Project
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="row g-4">
+        {% for project in projects %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 overflow-hidden">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="bi bi-image text-muted display-4"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-header bg-white py-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <span class="badge {% if project.status == 'completed' %}bg-success{% elif project.status == 'ongoing' %}bg-warning text-dark{% else %}bg-info text-dark{% endif %} mb-2">
+                                {{ project.get_status_display }}
+                            </span>
+                            {% if user.role == 'admin' or user.is_superuser %}
+                                <a href="{% url 'development-update' project.pk %}" class="text-primary"><i class="bi bi-pencil-square"></i></a>
+                            {% endif %}
+                        </div>
+                        <h5 class="fw-bold mb-0 text-dark">{{ project.title }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small mb-4">{{ project.description }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="small text-muted">Estimated Cost:</span>
+                            <span class="fw-bold text-primary">KES {{ project.estimated_cost|floatformat:0 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-building-add display-1 text-light"></i>
+                <p class="text-muted mt-3">No development projects currently listed.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

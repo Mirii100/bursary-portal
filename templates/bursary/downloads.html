@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Downloads & Resources - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark">Resources & Official Documents</h2>
+        <p class="text-muted">Download application guides, official forms, and transparency reports.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Sidebar Navigation for Categories -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 sticky-top" style="top: 100px;">
+                <div class="card-header bg-dark text-white fw-bold">Categories</div>
+                <div class="list-group list-group-flush small">
+                    <a href="#guides" class="list-group-item list-group-item-action"><i class="bi bi-book me-2"></i> Student Guides</a>
+                    <a href="#forms" class="list-group-item list-group-item-action"><i class="bi bi-file-earmark-text me-2"></i> Official Forms</a>
+                    <a href="#reports" class="list-group-item list-group-item-action"><i class="bi bi-graph-up me-2"></i> Public Reports</a>
+                    <a href="#policies" class="list-group-item list-group-item-action"><i class="bi bi-shield-check me-2"></i> Policies</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Downloads Area -->
+        <div class="col-lg-9">
+            <!-- Student Guides -->
+            <div id="guides" class="mb-5">
+                <h4 class="fw-bold text-primary mb-4"><i class="bi bi-book me-2"></i> Student Guides</h4>
+                <div class="row g-3">
+                    {% for doc in guides %}
+                        <div class="col-md-12">
+                            {% include 'bursary/partial_download_item.html' with doc=doc %}
+                        </div>
+                    {% empty %}
+                        <p class="text-muted small ps-3">No guides available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Official Forms -->
+            <div id="forms" class="mb-5">
+                <h4 class="fw-bold text-success mb-4"><i class="bi bi-file-earmark-text me-2"></i> Official Forms</h4>
+                <div class="row g-3">
+                    {% for doc in forms %}
+                        <div class="col-md-12">
+                            {% include 'bursary/partial_download_item.html' with doc=doc %}
+                        </div>
+                    {% empty %}
+                        <p class="text-muted small ps-3">No forms available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Reports -->
+            <div id="reports" class="mb-5">
+                <h4 class="fw-bold text-info mb-4"><i class="bi bi-graph-up me-2"></i> Public Reports</h4>
+                <div class="row g-3">
+                    {% for doc in reports %}
+                        <div class="col-md-12">
+                            {% include 'bursary/partial_download_item.html' with doc=doc %}
+                        </div>
+                    {% empty %}
+                        <p class="text-muted small ps-3">No reports available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bursary Award Letter - {{ application.student.get_full_name }}</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; line-height: 1.6; padding: 40px; }
+        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 30px; }
+        .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; }
+        .address { font-size: 14px; margin-top: 5px; }
+        .ref { text-align: right; margin-bottom: 20px; font-weight: bold; }
+        .content { margin-bottom: 40px; }
+        .signature { margin-top: 60px; }
+        .footer { text-align: center; font-size: 12px; margin-top: 50px; border-top: 1px solid #ccc; padding-top: 10px; }
+        @media print {
+            .no-print { display: none; }
+            body { padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print" style="text-align: right; margin-bottom: 20px;">
+        <button onclick="window.print()" style="padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer;">Print / Save as PDF</button>
+    </div>
+
+    <div class="header">
+        <div class="logo">Constituency Development Fund (CDF)</div>
+        <div class="address">P.O. Box 1234 - 00100, Nairobi | Email: info@constituency.go.ke</div>
+        <h3>OFFICIAL BURSARY AWARD LETTER</h3>
+    </div>
+
+    <div class="ref">
+        Ref No: {{ application.payment.payment_reference }}<br>
+        Date: {{ application.updated_at|date:"d F, Y" }}
+    </div>
+
+    <div class="content">
+        <p><strong>To:</strong> {{ application.student.get_full_name }}</p>
+        <p><strong>Admission No:</strong> {{ application.student.student_profile.admission_number }}</p>
+        <p><strong>School:</strong> {{ application.student.student_profile.school_name }}</p>
+
+        <p>Dear Student,</p>
+
+        <p><strong>RE: BURSARY AWARD ALLOCATION FOR ACADEMIC YEAR {{ application.academic_year }}</strong></p>
+
+        <p>We are pleased to inform you that the Constituency Bursary Committee has approved your application for financial assistance.</p>
+
+        <p>An amount of <strong>KES {{ application.amount_requested }}</strong> has been awarded to you to cater for your tuition fees. This amount has been disbursed directly to your institution's bank account.</p>
+
+        <p>Please present this letter to your school's accounts office for receipting.</p>
+
+        <p>We wish you success in your academic endeavors.</p>
+    </div>
+
+    <div class="signature">
+        <p>__________________________</p>
+        <p><strong>Fund Account Manager</strong></p>
+        <p>Constituency Bursary Committee</p>
+    </div>
+
+    <div class="footer">
+        <p>This is a computer-generated document. Verify authenticity by contacting the CDF office.</p>
+    </div>
+
+</body>
+</html>

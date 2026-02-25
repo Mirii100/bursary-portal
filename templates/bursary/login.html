@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In - Alexia's Global Tech{% endblock %}
+
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="row g-0 min-vh-100">
+        <!-- Left Side: Branding (Visible on Desktop) -->
+        <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center p-5 text-white shadow-lg" style="background: linear-gradient(135deg, #004a99 0%, #002d5e 100%);">
+            <div class="mb-5">
+                <a class="text-white text-decoration-none d-flex align-items-center mb-4" href="{% url 'home' %}">
+                    <i class="bi bi-bank2 fs-1 me-3"></i>
+                    <h2 class="fw-bold mb-0">Alexia's Global Tech</h2>
+                </a>
+                <h1 class="display-4 fw-bold mb-4">Welcome Back to the Portal</h1>
+                <p class="lead opacity-75 mb-5">Access your dashboard to track bursary applications, update your profile, and manage disbursements securely.</p>
+                
+                <div class="alert bg-white bg-opacity-10 border-0 text-white p-4 rounded-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+                        <h6 class="fw-bold mb-0">Important Notice</h6>
+                    </div>
+                    <p class="small mb-0 opacity-75">The 2025/2026 bursary application window is now open. Ensure your profile is 100% complete before applying.</p>
+                </div>
+            </div>
+            <div class="mt-auto small opacity-50">
+                &copy; 2026 Alexia's Global Tech Constituency Bursary System
+            </div>
+        </div>
+
+        <!-- Right Side: The Login Form -->
+        <div class="col-lg-7 d-flex align-items-center bg-white">
+            <div class="container p-4 p-md-5">
+                <div style="max-width: 450px;" class="mx-auto">
+                    <div class="text-center text-lg-start mb-5">
+                        <div class="d-lg-none mb-4">
+                            <i class="bi bi-bank2 fs-1 text-primary"></i>
+                            <h3 class="fw-bold text-dark mt-2">Alexia's Global Tech</h3>
+                        </div>
+                        <h2 class="fw-bold text-dark">Portal Sign In</h2>
+                        <p class="text-muted">Enter your secure credentials to access your workspace.</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if form.errors or form.non_field_errors %}
+                            <div class="alert alert-danger border-0 shadow-sm small mb-4">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                <strong>Login Failed:</strong> Invalid credentials or account does not exist. Please check and try again.
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-4">
+                            <label for="id_username" class="form-label fw-bold small text-muted">Username or Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person text-muted"></i></span>
+                                <input type="text" name="username" class="form-control border-start-0 bg-light" id="id_username" placeholder="Enter username or email" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label for="id_password" class="form-label fw-bold small text-muted mb-0">Password</label>
+                                <a href="{% url 'password_reset' %}" class="small fw-bold text-decoration-none text-primary">Forgot Password?</a>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
+                                <input type="password" name="password" class="form-control border-start-0 border-end-0 bg-light" id="id_password" placeholder="••••••••" required>
+                                <span class="input-group-text bg-light border-start-0" style="cursor: pointer;" onclick="togglePassword('id_password', 'toggleIcon')">
+                                    <i class="bi bi-eye text-muted" id="toggleIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label small text-muted" for="rememberMe">
+                                Keep me signed in on this device
+                            </label>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-4">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">
+                                Sign In to Portal <i class="bi bi-box-arrow-in-right ms-2"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-center text-muted small">
+                            Don't have an official account? <a href="{% url 'register' %}" class="fw-bold text-primary text-decoration-none">Register Now</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .input-group-text {
+        border-right: none;
+    }
+    .form-control {
+        border-left: none;
+    }
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #dee2e6;
+    }
+    .input-group:focus-within .input-group-text {
+        border-color: var(--helb-blue);
+    }
+    .input-group:focus-within .form-control {
+        border-color: var(--helb-blue);
+    }
+</style>
+{% endblock %}

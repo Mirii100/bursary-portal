@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Share Your Testimony - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white py-4 text-center">
+                    <h3 class="fw-bold mb-0">Share Your Experience</h3>
+                    <p class="mb-0 small opacity-75">Your story inspires others</p>
+                </div>
+                <div class="card-body p-4 p-lg-5">
+                    <div class="alert alert-info border-0 shadow-sm small mb-4">
+                        <i class="bi bi-info-circle-fill me-2"></i> Your testimony will be reviewed by the administrator before being featured on our homepage.
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-muted">My Story</label>
+                            {{ form.content }}
+                            {% if form.content.errors %}<div class="text-danger small mt-1">{{ form.content.errors|striptags }}</div>{% endif %}
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold">Submit Testimony</button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-light">Back to Portal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

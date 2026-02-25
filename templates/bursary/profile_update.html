@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Account Settings - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row g-4">
+        <!-- Sidebar Navigation -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 mb-4 sticky-top" style="top: 100px;">
+                <div class="card-body p-0">
+                    <div class="p-4 text-center border-bottom">
+                        {% if target_user.profile_photo %}
+                            <img src="{{ target_user.profile_photo.url }}" class="rounded-circle shadow-sm border mb-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-light d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 80px; height: 80px;">
+                                <i class="bi bi-person text-secondary fs-2"></i>
+                            </div>
+                        {% endif %}
+                        <h6 class="fw-bold mb-0">{{ target_user.get_full_name }}</h6>
+                        <small class="text-muted">{{ target_user.role|upper }}</small>
+                    </div>
+                    <div class="list-group list-group-flush py-2">
+                        <a href="{% url 'user-profile' %}" class="list-group-item list-group-item-action border-0 px-4 py-3">
+                            <i class="bi bi-person-circle me-3"></i> Profile Overview
+                        </a>
+                        <a href="{% url 'user-profile-update' %}" class="list-group-item list-group-item-action active border-0 px-4 py-3 bg-primary text-white">
+                            <i class="bi bi-gear-fill me-3"></i> Edit Account Details
+                        </a>
+                        {% if user.role == 'student' %}
+                        <a href="{% url 'profile-setup' %}" class="list-group-item list-group-item-action border-0 px-4 py-3">
+                            <i class="bi bi-mortarboard-fill me-3"></i> Educational/Guardian Info
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'password_change' %}" class="list-group-item list-group-item-action border-0 px-4 py-3">
+                            <i class="bi bi-shield-lock-fill me-3"></i> Security Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Form Area -->
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-white py-4 px-4 border-bottom">
+                    <h4 class="mb-0 fw-bold text-primary">Edit Account Details</h4>
+                    <p class="text-muted small mb-0">Update your personal information and profile picture.</p>
+                </div>
+                <div class="card-body p-4 p-lg-5">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <div class="col-12 text-center mb-4">
+                                <div class="position-relative d-inline-block">
+                                    {% if target_user.profile_photo %}
+                                        <img src="{{ target_user.profile_photo.url }}" class="rounded-circle shadow-sm border" style="width: 120px; height: 120px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="bg-light d-inline-flex align-items-center justify-content-center rounded-circle border" style="width: 120px; height: 120px;">
+                                            <i class="bi bi-camera text-secondary display-6"></i>
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-text small mt-2">Change Profile Photo</div>
+                                    {{ form.profile_photo }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">First Name</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}<div class="text-danger small mt-1">{{ form.first_name.errors|striptags }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">Last Name</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}<div class="text-danger small mt-1">{{ form.last_name.errors|striptags }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">Email Address</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors|striptags }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">Phone Number</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors|striptags }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold small text-muted">National ID Number</label>
+                                {{ form.national_id }}
+                                {% if form.national_id.errors %}<div class="text-danger small mt-1">{{ form.national_id.errors|striptags }}</div>{% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3 mt-5 pt-4 border-top">
+                            <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">Save Changes</button>
+                            <a href="{% url 'user-profile' %}" class="btn btn-light px-4">Discard Changes</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

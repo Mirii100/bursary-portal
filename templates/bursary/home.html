@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block title %}Alexia's Global Tech - Constituency Bursary Portal{% endblock %}
+
+{% block content %}
+    <header class="hero-section text-center">
+        <div class="container py-4">
+            <h1 class="display-3 fw-bold mb-3">Alexia's Global Tech Bursary System</h1>
+            <p class="lead mb-5 opacity-90 mx-auto" style="max-width: 800px;">
+                Empowering the youth through innovation. Alexia's Global Tech provides a transparent, accountable, and highly efficient financial aid portal for our constituency students.
+            </p>
+            {% if not user.is_authenticated %}
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'register' %}" class="btn btn-light btn-lg px-5 fw-bold shadow">Register Now</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-5 fw-bold">Portal Login</a>
+            </div>
+            {% else %}
+            <div class="d-flex justify-content-center">
+                {% if user.role == 'committee' %}
+                    <a href="{% url 'committee-dashboard' %}" class="btn btn-light btn-lg px-5 fw-bold shadow">Go to Review Panel</a>
+                {% elif user.role == 'admin' or user.is_superuser %}
+                    <a href="{% url 'admin-dashboard' %}" class="btn btn-light btn-lg px-5 fw-bold shadow">Go to Admin Control</a>
+                {% else %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg px-5 fw-bold shadow">Go to My Portal</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="container my-5 py-5">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="card h-100 p-4 border-0 shadow-sm transition-hover">
+                    <div class="card-body">
+                        <div class="bg-light p-3 rounded-circle d-inline-flex mb-4">
+                            <i class="bi bi-lightning-charge-fill text-primary fs-2"></i>
+                        </div>
+                        <h4 class="fw-bold">Fast Processing</h4>
+                        <p class="text-muted">Digital-first approach reduces processing time from months to weeks. Get your allocation faster.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-4 border-0 shadow-sm transition-hover">
+                    <div class="card-body">
+                        <div class="bg-light p-3 rounded-circle d-inline-flex mb-4">
+                            <i class="bi bi-shield-check text-primary fs-2"></i>
+                        </div>
+                        <h4 class="fw-bold">Total Transparency</h4>
+                        <p class="text-muted">Real-time tracking of your application. Every shilling is accounted for through digital audit trails.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-4 border-0 shadow-sm transition-hover">
+                    <div class="card-body">
+                        <div class="bg-light p-3 rounded-circle d-inline-flex mb-4">
+                            <i class="bi bi-graph-up-arrow text-primary fs-2"></i>
+                        </div>
+                        <h4 class="fw-bold">Data-Driven</h4>
+                        <p class="text-muted">Allocations are based on a fair vulnerability scoring system, ensuring those most in need get support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="bg-light py-5 border-top border-bottom">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">How to Apply for Bursary</h2>
+                <p class="text-muted">Follow these simple steps to submit your application through the Alexia's Global Tech Portal.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px; font-weight: bold; font-size: 1.2rem;">1</div>
+                        <h5 class="fw-bold">Account Setup</h5>
+                        <p class="small text-muted text-center">Register an account and complete your 4-step student profile including residency and guardian details.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px; font-weight: bold; font-size: 1.2rem;">2</div>
+                        <h5 class="fw-bold">Document Upload</h5>
+                        <p class="small text-muted text-center">Prepare clear copies of your Student ID, Fee Structure, and Admission Letter for the current academic year.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px; font-weight: bold; font-size: 1.2rem;">3</div>
+                        <h5 class="fw-bold">Apply Online</h5>
+                        <p class="small text-muted text-center">Navigate to 'My Portal', select the academic year, enter the requested amount and upload your documents.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px; font-weight: bold; font-size: 1.2rem;">4</div>
+                        <h5 class="fw-bold">Track Status</h5>
+                        <p class="small text-muted text-center">Monitor your dashboard for real-time progress. You will receive SMS/Email alerts once vetting is complete.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white py-5 border-top overflow-hidden">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Student Testimonies</h2>
+                <p class="text-muted">Real stories from beneficiaries of the Alexia's Global Tech system.</p>
+            </div>
+            
+            <div class="testimony-track-wrapper">
+                <div class="testimony-track">
+                    {% for testimony in testimonies %}
+                        <div class="testimony-card-scroll">
+                            <div class="card h-100 shadow-sm border-0 p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    {% if testimony.user.profile_photo %}
+                                        <img src="{{ testimony.user.profile_photo.url }}" class="rounded-circle border border-2 border-primary p-1" style="width: 60px; height: 60px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 60px; height: 60px;">
+                                            {{ testimony.user.first_name|first }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="ms-3">
+                                        <h6 class="fw-bold mb-0 text-dark">{{ testimony.user.get_full_name }}</h6>
+                                        <small class="text-muted">{{ testimony.user.student_profile.school_name|truncatechars:25 }}</small>
+                                    </div>
+                                </div>
+                                <p class="fst-italic text-dark small mb-0">"{{ testimony.content|truncatechars:150 }}"</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!-- Duplicate for infinite effect -->
+                    {% for testimony in testimonies %}
+                        <div class="testimony-card-scroll">
+                            <div class="card h-100 shadow-sm border-0 p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    {% if testimony.user.profile_photo %}
+                                        <img src="{{ testimony.user.profile_photo.url }}" class="rounded-circle border border-2 border-primary p-1" style="width: 60px; height: 60px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 60px; height: 60px;">
+                                            {{ testimony.user.first_name|first }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="ms-3">
+                                        <h6 class="fw-bold mb-0 text-dark">{{ testimony.user.get_full_name }}</h6>
+                                        <small class="text-muted">{{ testimony.user.student_profile.school_name|truncatechars:25 }}</small>
+                                    </div>
+                                </div>
+                                <p class="fst-italic text-dark small mb-0">"{{ testimony.content|truncatechars:150 }}"</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if user.is_authenticated and user.role == 'student' %}
+                <div class="text-center mt-5">
+                    <a href="{% url 'submit-testimony' %}" class="btn btn-outline-primary px-4 shadow-sm">
+                        <i class="bi bi-chat-heart me-2"></i> Share Your Story
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <style>
+        .testimony-track-wrapper {
+            width: 100%;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .testimony-track {
+            display: flex;
+            width: max-content;
+            animation: scroll 40s linear infinite;
+        }
+        .testimony-track:hover {
+            animation-play-state: paused;
+        }
+        .testimony-card-scroll {
+            width: 350px;
+            margin: 0 15px;
+            flex-shrink: 0;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-350px * {{ testimonies|length }} - 30px * {{ testimonies|length }})); }
+        }
+    </style>
+
+    <section class="bg-white py-5">
+        <div class="container text-center">
+            <h5 class="text-muted text-uppercase mb-4 small fw-bold">Supported Institutions</h5>
+            <div class="row align-items-center opacity-50">
+                <div class="col">Universities</div>
+                <div class="col">TVET Colleges</div>
+                <div class="col">Secondary Schools</div>
+                <div class="col">Special Schools</div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .transition-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .transition-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+        }
+    </style>
+{% endblock %}

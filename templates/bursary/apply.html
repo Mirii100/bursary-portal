@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if is_editing %}Edit Application{% else %}Apply for Bursary{% endif %} - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white py-4 text-center">
+                    <h3 class="fw-bold mb-0">{% if is_editing %}Edit Application{% else %}Bursary Application Form{% endif %}</h3>
+                    <p class="mb-0 small opacity-75">{% if is_editing %}Update your submission details{% else %}Constituency Financial Aid Portal{% endif %}</p>
+                </div>
+                <div class="card-body p-4 p-lg-5">
+                    {% if is_continuing %}
+                        <div class="alert alert-info border-0 shadow-sm d-flex align-items-center mb-4">
+                            <div class="bg-primary text-white rounded-circle p-2 me-3">
+                                <i class="bi bi-person-check-fill fs-4"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Welcome back, Continuing Student!</h6>
+                                <p class="small mb-0 text-dark">We have your verified Student ID and Admission Letter on file. <strong>You only need to upload your latest Fee Structure</strong> to complete this application.</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-primary border-0 shadow-sm small mb-4">
+                            <i class="bi bi-info-circle-fill me-2"></i> <strong>First-Time Applicant:</strong> Please ensure all mandatory documents are uploaded correctly to pass the initial screening.
+                        </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <!-- Section 1: Application Details -->
+                            <div class="col-12 border-bottom pb-2">
+                                <h5 class="fw-bold text-primary mb-0"><i class="bi bi-1-circle me-2"></i> Application Basics</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">{{ app_form.academic_year.label }}</label>
+                                {{ app_form.academic_year }}
+                                {% if app_form.academic_year.errors %}
+                                    <div class="text-danger small mt-1">{{ app_form.academic_year.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">{{ app_form.amount_requested.label }}</label>
+                                {{ app_form.amount_requested }}
+                                {% if app_form.amount_requested.errors %}
+                                    <div class="text-danger small mt-1">{{ app_form.amount_requested.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Section 2: Document Bundle -->
+                            <div class="col-12 border-bottom pb-2 mt-5">
+                                <h5 class="fw-bold text-primary mb-0"><i class="bi bi-2-circle me-2"></i> Support Documents</h5>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold small text-muted d-flex justify-content-between">
+                                    {{ doc_form.fee_structure.label }}
+                                    <span class="text-danger small">* Required</span>
+                                </label>
+                                {{ doc_form.fee_structure }}
+                                <div class="form-text small" style="font-size: 0.75rem;">Upload the latest official fee structure from your school.</div>
+                                {% if doc_form.fee_structure.errors %}
+                                    <div class="text-danger small mt-1">{{ doc_form.fee_structure.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted d-flex justify-content-between">
+                                    {{ doc_form.student_id_card.label }}
+                                    {% if not is_continuing %}<span class="text-danger small">* Required</span>{% else %}<span class="text-success small">Optional (Reused)</span>{% endif %}
+                                </label>
+                                {{ doc_form.student_id_card }}
+                                {% if doc_form.student_id_card.help_text %}
+                                    <div class="form-text small" style="font-size: 0.75rem;">{{ doc_form.student_id_card.help_text }}</div>
+                                {% endif %}
+                                {% if doc_form.student_id_card.errors %}
+                                    <div class="text-danger small mt-1">{{ doc_form.student_id_card.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">
+                                    {{ doc_form.admission_letter.label }}
+                                    <span class="text-muted small">Optional</span>
+                                </label>
+                                {{ doc_form.admission_letter }}
+                                <div class="form-text small" style="font-size: 0.75rem;">Required only for first-year/new applicants.</div>
+                                {% if doc_form.admission_letter.errors %}
+                                    <div class="text-danger small mt-1">{{ doc_form.admission_letter.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold shadow">Submit Official Application</button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-light">Discard & Return</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

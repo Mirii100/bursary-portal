@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - Alexia's Global Tech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row g-4">
+        <!-- Sidebar Navigation -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 mb-4 sticky-top" style="top: 100px;">
+                <div class="card-body p-0">
+                    <div class="p-4 text-center border-bottom">
+                        {% if target_user.profile_photo %}
+                            <img src="{{ target_user.profile_photo.url }}" class="rounded-circle shadow-sm border mb-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-light d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 80px; height: 80px;">
+                                <i class="bi bi-person text-secondary fs-2"></i>
+                            </div>
+                        {% endif %}
+                        <h6 class="fw-bold mb-0">{{ target_user.get_full_name }}</h6>
+                        <small class="text-muted">{{ target_user.role|upper }}</small>
+                    </div>
+                    <div class="list-group list-group-flush py-2">
+                        <a href="{% url 'user-profile' %}" class="list-group-item list-group-item-action active border-0 px-4 py-3 bg-primary text-white">
+                            <i class="bi bi-person-circle me-3"></i> Profile Overview
+                        </a>
+                        <a href="{% url 'user-profile-update' %}" class="list-group-item list-group-item-action border-0 px-4 py-3">
+                            <i class="bi bi-gear-fill me-3"></i> Edit Account Details
+                        </a>
+                        {% if user.role == 'student' %}
+                        <a href="{% url 'profile-setup' %}" class="list-group-item list-group-item-action border-0 px-4 py-3">
+                            <i class="bi bi-mortarboard-fill me-3"></i> Educational/Guardian Info
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'password_change' %}" class="list-group-item list-group-item-action border-0 px-4 py-3">
+                            <i class="bi bi-shield-lock-fill me-3"></i> Security Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-header bg-white py-4 px-4 border-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0 fw-bold text-primary">Personal Profile</h4>
+                        <p class="text-muted small mb-0">Overview of your basic account information.</p>
+                    </div>
+                    <a href="{% url 'user-profile-update' %}" class="btn btn-outline-primary btn-sm px-3 shadow-sm">
+                        <i class="bi bi-pencil-square me-2"></i> Edit Details
+                    </a>
+                </div>
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Full Legal Name</label>
+                            <span class="fs-5 fw-medium">{{ target_user.get_full_name }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">National ID / Passport</label>
+                            <span class="fs-5 fw-medium">{{ target_user.national_id|default:"Not Provided" }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Email Address</label>
+                            <span class="fs-5 fw-medium">{{ target_user.email }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Contact Phone</label>
+                            <span class="fs-5 fw-medium">{{ target_user.phone|default:"Not Provided" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if target_user.role == 'student' and target_user.student_profile %}
+            <!-- Residential & Educational Summary -->
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-white py-4 px-4 border-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0 fw-bold text-primary">Residency & Education</h4>
+                        <p class="text-muted small mb-0">Location and institutional details on file.</p>
+                    </div>
+                    <a href="{% url 'profile-setup' %}" class="btn btn-outline-primary btn-sm px-3 shadow-sm">
+                        <i class="bi bi-pencil-square me-2"></i> Update Info
+                    </a>
+                </div>
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Academic Institution</label>
+                            <span class="fs-5 fw-medium">{{ target_user.student_profile.school_name }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">County</label>
+                            <span class="fs-5 fw-medium">{{ target_user.student_profile.county }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Constituency</label>
+                            <span class="fs-5 fw-medium">{{ target_user.student_profile.constituency }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Ward</label>
+                            <span class="fs-5 fw-medium">{{ target_user.student_profile.ward }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Location / Sub-Location</label>
+                            <span class="fs-5 fw-medium">{{ target_user.student_profile.location }} / {{ target_user.student_profile.sub_location }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
