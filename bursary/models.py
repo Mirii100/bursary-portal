@@ -53,6 +53,15 @@ class StudentProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student_profile')
     school_name = models.CharField(max_length=255)
     admission_number = models.CharField(max_length=50)
+    course = models.CharField(max_length=255, default="")
+    year_of_study = models.CharField(max_length=20, default="", choices=[
+        ('Year 1', 'Year 1'),
+        ('Year 2', 'Year 2'),
+        ('Year 3', 'Year 3'),
+        ('Year 4', 'Year 4'),
+        ('Year 5', 'Year 5'),
+        ('Year 6', 'Year 6'),
+    ])
     guardian_name = models.CharField(max_length=255, default="")
     guardian_phone = models.CharField(max_length=15, default="")
     guardian_id_number = models.CharField(max_length=20, default="")

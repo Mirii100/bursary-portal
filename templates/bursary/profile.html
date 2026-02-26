@@ -93,6 +93,14 @@
                             <span class="fs-5 fw-medium">{{ target_user.student_profile.school_name }}</span>
                         </div>
                         <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Course of Study</label>
+                            <span class="fs-5 fw-medium">{{ target_user.student_profile.course|default:"Not Provided" }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold text-uppercase d-block mb-1">Year of Study</label>
+                            <span class="fs-5 fw-medium">{{ target_user.student_profile.year_of_study|default:"Not Provided" }}</span>
+                        </div>
+                        <div class="col-md-6">
                             <label class="text-muted small fw-bold text-uppercase d-block mb-1">County</label>
                             <span class="fs-5 fw-medium">{{ target_user.student_profile.county }}</span>
                         </div>

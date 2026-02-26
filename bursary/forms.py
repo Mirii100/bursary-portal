@@ -61,7 +61,7 @@ class UserProfileUpdateForm(forms.ModelForm):
             raise forms.ValidationError("A user with that email already exists.")
         return email
 
-from .constants import KENYAN_SCHOOLS, KENYAN_COUNTIES, KENYAN_CONSTITUENCIES, SAMPLE_WARDS, SAMPLE_LOCATIONS, SAMPLE_SUBLOCATIONS
+from .constants import KENYAN_SCHOOLS, KENYAN_COUNTIES, KENYAN_CONSTITUENCIES, SAMPLE_WARDS, SAMPLE_LOCATIONS, SAMPLE_SUBLOCATIONS, KENYAN_COURSES
 
 class StudentProfileForm(forms.ModelForm):
     guardian_id_copy = forms.FileField(required=True, widget=forms.FileInput(attrs={'class': 'form-control'}))
@@ -69,7 +69,7 @@ class StudentProfileForm(forms.ModelForm):
     class Meta:
         model = StudentProfile
         fields = [
-            'school_name', 'admission_number', 
+            'school_name', 'admission_number', 'course', 'year_of_study',
             'county', 'constituency', 'ward', 'location', 'sub_location',
             'guardian_name', 'guardian_phone', 'guardian_id_number', 'guardian_income', 'household_size',
             'guardian_id_copy'
@@ -77,6 +77,8 @@ class StudentProfileForm(forms.ModelForm):
         widgets = {
             'school_name': forms.Select(choices=[('', 'Select Your School')] + KENYAN_SCHOOLS, attrs={'class': 'form-select'}),
             'admission_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter admission number'}),
+            'course': forms.Select(choices=[('', 'Select Your Course')] + KENYAN_COURSES, attrs={'class': 'form-select'}),
+            'year_of_study': forms.Select(attrs={'class': 'form-select'}),
             
             # Residency Dropdowns
             'county': forms.Select(choices=[('', 'Select County')] + KENYAN_COUNTIES, attrs={'class': 'form-select'}),

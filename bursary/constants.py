@@ -61,3 +61,68 @@ SAMPLE_LOCATIONS = [
 SAMPLE_SUBLOCATIONS = [
     ('Sub-Location 1', 'Sub-Location 1'), ('Sub-Location 2', 'Sub-Location 2'), ('Sub-Location 3', 'Sub-Location 3')
 ]
+
+KENYAN_COURSES = [
+    ('Medicine & Health', (
+        ('BSc. Medicine & Surgery', 'BSc. Medicine & Surgery'),
+        ('BSc. Nursing', 'BSc. Nursing'),
+        ('BSc. Pharmacy', 'BSc. Pharmacy'),
+        ('BSc. Clinical Medicine', 'BSc. Clinical Medicine'),
+        ('BSc. Public Health', 'BSc. Public Health'),
+        ('BSc. Medical Laboratory Science', 'BSc. Medical Laboratory Science'),
+        ('BSc. Dental Surgery', 'BSc. Dental Surgery'),
+    )),
+    ('Engineering & Technology', (
+        ('BSc. Civil Engineering', 'BSc. Civil Engineering'),
+        ('BSc. Electrical & Electronic Engineering', 'BSc. Electrical & Electronic Engineering'),
+        ('BSc. Mechanical Engineering', 'BSc. Mechanical Engineering'),
+        ('BSc. Mechatronic Engineering', 'BSc. Mechatronic Engineering'),
+        ('BSc. Computer Science', 'BSc. Computer Science'),
+        ('BSc. Information Technology', 'BSc. Information Technology'),
+        ('BSc. Software Engineering', 'BSc. Software Engineering'),
+        ('BSc. Geospatial Engineering', 'BSc. Geospatial Engineering'),
+    )),
+    ('Business & Economics', (
+        ('B. Commerce (Accounting)', 'B. Commerce (Accounting)'),
+        ('B. Commerce (Finance)', 'B. Commerce (Finance)'),
+        ('B. Commerce (Marketing)', 'B. Commerce (Marketing)'),
+        ('B. Commerce (HRM)', 'B. Commerce (HRM)'),
+        ('BSc. Economics', 'BSc. Economics'),
+        ('BSc. Economics & Statistics', 'BSc. Economics & Statistics'),
+        ('BSc. Actuarial Science', 'BSc. Actuarial Science'),
+        ('B. Business Information Technology', 'B. Business Information Technology'),
+    )),
+    ('Law & Social Sciences', (
+        ('Bachelor of Laws (LLB)', 'Bachelor of Laws (LLB)'),
+        ('B.A. Political Science & Public Admin', 'B.A. Political Science & Public Admin'),
+        ('B.A. Sociology', 'B.A. Sociology'),
+        ('B.A. Criminology', 'B.A. Criminology'),
+        ('B.A. International Relations', 'B.A. International Relations'),
+        ('B.A. Psychology', 'B.A. Psychology'),
+    )),
+    ('Education & Arts', (
+        ('B. Ed. Arts', 'B. Ed. Arts'),
+        ('B. Ed. Science', 'B. Ed. Science'),
+        ('B. Ed. Special Needs', 'B. Ed. Special Needs'),
+        ('B. Ed. Early Childhood', 'B. Ed. Early Childhood'),
+        ('B.A. Design', 'B.A. Design'),
+        ('B.A. Communication & Media', 'B.A. Communication & Media'),
+    )),
+    ('Agriculture & Environment', (
+        ('BSc. Agriculture', 'BSc. Agriculture'),
+        ('BSc. Animal Science', 'BSc. Animal Science'),
+        ('BSc. Environmental Science', 'BSc. Environmental Science'),
+        ('BSc. Agribusiness Management', 'BSc. Agribusiness Management'),
+        ('BSc. Horticulture', 'BSc. Horticulture'),
+    )),
+    ('TVET & Diploma Courses', (
+        ('Diploma in Electrical Engineering', 'Diploma in Electrical Engineering'),
+        ('Diploma in Civil Engineering', 'Diploma in Civil Engineering'),
+        ('Diploma in Information Technology', 'Diploma in Information Technology'),
+        ('Diploma in Business Management', 'Diploma in Business Management'),
+        ('Diploma in Catering & Accommodation', 'Diploma in Catering & Accommodation'),
+        ('Diploma in Plumbing', 'Diploma in Plumbing'),
+        ('Diploma in Automotive Engineering', 'Diploma in Automotive Engineering'),
+    )),
+]
+
