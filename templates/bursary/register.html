@@ -65,6 +65,14 @@
                     <form method="post" class="needs-validation">
                         {% csrf_token %}
                         
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger border-0 shadow-sm small mb-4">
+                                {% for error in form.non_field_errors %}
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
                         <!-- Role Selection -->
                         <div class="mb-4">
                             <label class="form-label fw-bold small text-muted">Registering As</label>
@@ -142,23 +150,24 @@
                                 <label class="form-label fw-bold small text-muted">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="bi bi-lock text-muted"></i></span>
-                                    <input type="password" name="password" class="form-control bg-light" id="id_password" required>
+                                    <input type="password" name="password1" class="form-control bg-light" id="id_password" required>
                                     <span class="input-group-text bg-light" style="cursor: pointer;" onclick="togglePassword('id_password', 'toggleIcon1')">
                                         <i class="bi bi-eye text-muted" id="toggleIcon1"></i>
                                     </span>
                                 </div>
-                                {% if form.password.errors %}<div class="text-danger small mt-1">{{ form.password.errors|striptags }}</div>{% endif %}
+                                {% if form.password1.errors %}<div class="text-danger small mt-1">{{ form.password1.errors|striptags }}</div>{% endif %}
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold small text-muted">Confirm Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="bi bi-lock-fill text-muted"></i></span>
-                                    <input type="password" name="confirm_password" class="form-control bg-light" id="id_confirm_password" required>
+                                    <input type="password" name="password2" class="form-control bg-light" id="id_confirm_password" required>
                                     <span class="input-group-text bg-light" style="cursor: pointer;" onclick="togglePassword('id_confirm_password', 'toggleIcon2')">
                                         <i class="bi bi-eye text-muted" id="toggleIcon2"></i>
                                     </span>
                                 </div>
+                                {% if form.password2.errors %}<div class="text-danger small mt-1">{{ form.password2.errors|striptags }}</div>{% endif %}
                             </div>
                             <div class="col-12">
                                 <p class="form-text text-muted smaller mt-2" style="font-size: 0.75rem;">
